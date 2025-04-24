@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>个人简历表格</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+
+   .resume {
+      width: 710px;
+      border: 1px solid #aaa;
+      background-image: url("1.jpeg");
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      background-color: white;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-auto-rows: minmax(60px, auto);
+    }
+
+   .resume-caption {
+      grid-column: 1 / -1;
+      text-align: center;
+      font-weight: bold;
+      padding: 15px 0;
+      font-size: 20px;
+      color: #333;
+    }
+
+   .resume-cell {
+      display: flex;
+      align-items: center;
+      box-sizing: border-box;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #aaa;
+      transition: all 0.3s ease;
+    }
+
+   .resume-cell.stuff {
+      background-color: #e0e0e0;
+      width: auto;
+      justify-content: center;
+      font-weight: bold;
+      color: #333;
+    }
+
+   .resume-cell.normal {
+      flex: 1;
+    }
+
+   .resume-cell.photo-cell {
+      grid-column: 5 / span 2;
+      grid-row: 2 / span 3;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+   .resume-cell.photo-cell img {
+      width: 150px;
+      height: auto;
+      border-radius: 5px;
+    }
+
+   .resume-cell.long-cell {
+      line-height: 1.5;
+    }
+
+   .resume-cell.height-90 {
+      height: 90px;
+    }
+
+   .resume-cell.height-160 {
+      height: 160px;
+    }
+
+   .resume-cell.height-120 {
+      height: 200px;
+    }
+
+   .resume-cell:hover {
+      transform: translate(5px, -5px) rotate(2deg);
+    }
+
+   .resume-cell.stuff i {
+      transition: transform 0.3s ease;
+    }
+
+   .resume-cell.stuff i:hover {
+      transform: rotate(360deg);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="resume">
+    <div class="resume-caption">个人简历</div>
+    <div class="resume-cell stuff"><i class="fa-solid fa-user"></i> 姓名</div>
+    <div class="resume-cell normal">宋均辉</div>
+    <div class="resume-cell stuff"><i class="fa-solid fa-venus-mars"></i> 性别</div>
+    <div class="resume-cell normal">女</div>
+    <div class="resume-cell stuff"><i class="fa-solid fa-cake-candles"></i> 年龄</div>
+    <div class="resume-cell normal">21</div>
+    <div class="resume-cell photo-cell">
+      <img src="2.jpeg" style="width: 100%; height: auto;">
+    </div>
+    <div class="resume-cell stuff"><i class="fa-solid fa-location-dot"></i> 籍贯</div>
+    <div class="resume-cell normal">威海</div>
+    <div class="resume-cell stuff"><i class="fa-solid fa-phone"></i> 联系电话</div>
+    <div class="resume-cell normal">18769188781</div>
+    <div class="resume-cell stuff"><i class="fa-solid fa-envelope"></i> 电子邮箱</div>
+    <div class="resume-cell normal">2927943374@qq.com</div>
+    <div class="resume-cell stuff"><i class="fa-solid fa-graduation-cap"></i> 学历</div>
+    <div class="resume-cell normal">本科</div>
+    <div class="resume-cell stuff"><i class="fa-solid fa-heart-pulse"></i> 健康状况</div>
+    <div class="resume-cell normal">良好</div>
+    <div class="resume-cell stuff"><i class="fa-solid fa-ring"></i> 婚姻状况</div>
+    <div class="resume-cell normal">未婚</div>
+    <div class="resume-cell stuff"><i class="fa-solid fa-briefcase"></i> 求职意向</div>
+    <div class="resume-cell normal">软件工程</div>
+    <div class="resume-cell stuff"><i class="fa-solid fa-book-open"></i> 专业</div>
+    <div class="resume-cell long-cell" style="grid-column: -4 / span 1;">软件工程</div>
+    <div class="resume-cell stuff"><i class="fa-solid fa-school"></i> 毕业院校</div>
+    <div class="resume-cell long-cell" style="grid-column: 5 / span -8;">烟台理工学院</div>
+    <div class="resume-cell stuff"><i class="fa-solid fa-certificate"></i> 技能证书</div>
+    <div class="resume-cell long-cell" style="grid-column: 2 / -1;">**技能证书</div>
+    <div class="resume-cell stuff height-90"><i class="fa-solid fa-star"></i> 个人特长与爱好</div>
+    <div class="resume-cell long-cell height-90" style="grid-column: 2 / -1;">熟练使用 Photoshop、剪映等工具，能独立完成海报制作、短视频剪辑。长期关注互联网行业动态，每天阅读 3 - 5 篇行业资讯文章。</div>
+    <div class="resume-cell stuff height-160"><i class="fa-solid fa-project-diagram"></i> 项目经历</div>
+    <div class="resume-cell long-cell height-160" style="grid-column: 2 / -1;">无</div>
+    <div class="resume-cell stuff height-120"><i class="fa-solid fa-user-check"></i> 自我评价</div>
+    <div class="resume-cell long-cell height-120" style="grid-column: 2 / -1;">我性格热情开朗，待人真诚友善，沟通能力出色，能迅速与不同人群建立良好关系，在过往团队项目中，常承担协调角色，促进成员高效协作。学习上，我积极进取，专业知识扎实，课堂表现优异，多次取得高分成绩，还利用课余自学相关技能，拓展知识边界。面对困难，我坚韧不拔，不轻易言弃，会冷静分析并寻找解决方案。同时，我具备良好的适应能力，能快速融入新环境、新工作模式。期待能加入贵公司，贡献自己的力量，与公司共同成长。我具备良好的团队协作精神，善于倾听他人意见，在团队合作中充分发挥自己优势，助力团队达成目标。性格乐观向上，面对困难保持积极心态，勇于迎接挑战。我对未来工作充满热情，渴望在新岗位上施展才华，实现个人价值与公司发展的双赢。</div>
+  </div>
+</body>
+
+</html>    
