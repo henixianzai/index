@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>七彩循环灯效果</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        warning: '#F59E0B',
+                        danger: '#EF4444',
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .light-glow {
+                box-shadow: 0 0 15px 5px currentColor;
+            }
+            .light-pulse {
+                animation: pulse 2s infinite;
+            }
+            @keyframes pulse {
+                0%, 100% {
+                    opacity: 1;
+                }
+                50% {
+                    opacity: 0.7;
+                }
+            }
+            .light-blink {
+                animation: blink 1.5s infinite;
+            }
+            @keyframes blink {
+                0%, 100% {
+                    opacity: 1;
+                }
+                50% {
+                    opacity: 0.2;
+                }
+            }
+            .light-card {
+                transition: all 0.3s ease;
+            }
+            .light-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen font-inter flex items-center justify-center p-4">
+    <div class="w-full max-w-4xl bg-white rounded-xl shadow-lg p-6 transform transition-all hover:shadow-xl">
+        <header class="mb-8 text-center">
+            <h1 class="text-2xl font-bold text-gray-800">七彩循环灯效果</h1>
+            <p class="text-gray-600 text-sm mt-2">7个灯，7种颜色，循环变化，每个灯独占空间</p>
+        </header>
+        
+        <!-- 灯组容器 -->
+        <div class="bg-gray-50 rounded-lg p-6 mb-6">
+            <div id="seven-color-lights" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-4 w-full">
+            </div>
+            
+            <div class="mt-6 text-center">
+                <p id="light-status" class="text-gray-600 text-sm"></p>
+                <p id="animation-status" class="text-gray-500 text-xs mt-1">状态: 已停止</p>
+            </div>
+        </div>
+        
+        <!-- 控制按钮 -->
+        <div class="space-y-4">
+            <div class="flex space-x-4">
+                <button id="start-btn" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                    <i class="fa fa-play mr-2"></i> 启动动画
+                </button>
+                <button id="stop-btn" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-red-500" disabled>
+                    <i class="fa fa-stop mr-2"></i> 停止动画
+                </button>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">动画速度</label>
+                <div class="flex items-center space-x-4">
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="speed" value="slow" class="text-primary focus:ring-primary/50 h-4 w-4">
+                        <span class="ml-2 text-sm text-gray-700">慢速 (2秒)</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="speed" value="normal" checked class="text-primary focus:ring-primary/50 h-4 w-4">
+                        <span class="ml-2 text-sm text-gray-700">正常 (1秒)</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="speed" value="fast" class="text-primary focus:ring-primary/50 h-4 w-4">
+                        <span class="ml-2 text-sm text-gray-700">快速 (0.5秒)</span>
+                    </label>
+                </div>
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">显示效果</label>
+                <div class="flex items-center space-x-4">
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="effect" value="glow" checked class="text-primary focus:ring-primary/50 h-4 w-4">
+                        <span class="ml-2 text-sm text-gray-700">发光效果</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="effect" value="pulse" class="text-primary focus:ring-primary/50 h-4 w-4">
+                        <span class="ml-2 text-sm text-gray-700">脉冲效果</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="effect" value="blink" class="text-primary focus:ring-primary/50 h-4 w-4">
+                        <span class="ml-2 text-sm text-gray-700">闪烁效果</span>
+                    </label>
+                </div>
+            </div>
+            
+            <button id="reset-lights" class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+                <i class="fa fa-refresh mr-2"></i> 重置灯组
+            </button>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const colors = [
+                { bg: '#3B82F6', border: 'rgba(59, 130, 246, 0.8)', color: '#3B82F6', name: '蓝色' },
+                { bg: '#10B981', border: 'rgba(16, 185, 129, 0.8)', color: '#10B981', name: '绿色' },
+                { bg: '#F59E0B', border: 'rgba(245, 158, 11, 0.8)', color: '#F59E0B', name: '黄色' },
+                { bg: '#EF4444', border: 'rgba(239, 68, 68, 0.8)', color: '#EF4444', name: '红色' },
+                { bg: '#A855F7', border: 'rgba(168, 85, 247, 0.8)', color: '#A855F7', name: '紫色' },
+                { bg: '#EC4899', border: 'rgba(236, 72, 153, 0.8)', color: '#EC4899', name: '粉色' },
+                { bg: '#F97316', border: 'rgba(249, 115, 22, 0.8)', color: '#F97316', name: '琥珀色' }
+            ];
+            
+            const lightsContainer = document.getElementById('seven-color-lights');
+            const lightStatus = document.getElementById('light-status');
+            const startBtn = document.getElementById('start-btn');
+            const stopBtn = document.getElementById('stop-btn');
+            const animationStatus = document.getElementById('animation-status');
+            
+            const lights = [];
+            for (let i = 0; i < 7; i++) {
+                const lightCard = document.createElement('div');
+                lightCard.className = 'light-card bg-white rounded-lg shadow p-4 flex flex-col items-center';
+                
+                const light = document.createElement('div');
+                light.className = 'w-16 h-16 rounded-full border-2 flex-shrink-0 mb-3 transition-all duration-300';
+                light.dataset.index = i;
+                
+                const lightName = document.createElement('p');
+                lightName.className = 'text-sm font-medium text-gray-700';
+                lightName.textContent = `灯 ${i+1}`;
+                
+                lightCard.appendChild(light);
+                lightCard.appendChild(lightName);
+                lightsContainer.appendChild(lightCard);
+                lights.push(light);
+            }
+            
+            let currentTime = 0;
+            let animationSpeed = 1000;
+            let effect = 'glow';
+            let intervalId = null;
+            let isRunning = false;
+
+            function updateLights() {
+                lights.forEach((light, index) => {
+                    const colorIndex = (currentTime + index) % 7;
+                    const color = colors[colorIndex];
+                    
+                    // 清除所有效果类
+                    light.className = 'w-16 h-16 rounded-full border-2 flex-shrink-0 mb-3 transition-all duration-300';
+                    
+                    // 设置颜色
+                    light.style.backgroundColor = color.bg;
+                    light.style.borderColor = color.border;
+                    
+                    // 更新灯名称
+                    light.nextElementSibling.textContent = `灯 ${index+1} (${color.name})`;
+                    
+                    // 添加效果类
+                    if (effect === 'glow') {
+                        light.classList.add('light-glow');
+                        light.style.boxShadow = `0 0 15px 5px ${color.color}`;
+                    } else if (effect === 'pulse') {
+                        light.classList.add('light-pulse');
+                        light.style.boxShadow = `0 0 15px 5px ${color.color}`;
+                    } else if (effect === 'blink') {
+                        light.classList.add('light-blink');
+                        light.style.boxShadow = `0 0 15px 5px ${color.color}`;
+                    }
+                });
+                
+                lightStatus.textContent = `当前颜色组合: ${colors.map((c, i) => colors[(currentTime + i) % 7].name).join(' ')}`;
+                currentTime = (currentTime + 1) % 7;
+            }
+
+            function startAnimation() {
+                if (!isRunning) {
+                    intervalId = setInterval(updateLights, animationSpeed);
+                    isRunning = true;
+                    startBtn.disabled = true;
+                    stopBtn.disabled = false;
+                    animationStatus.textContent = '状态: 运行中';
+                }
+            }
+
+            function stopAnimation() {
+                if (isRunning) {
+                    clearInterval(intervalId);
+                    isRunning = false;
+                    startBtn.disabled = false;
+                    stopBtn.disabled = true;
+                    animationStatus.textContent = '状态: 已停止';
+                }
+            }
+
+            function resetLights() {
+                stopAnimation();
+                currentTime = 0;
+                updateLights();
+            }
+
+            startBtn.addEventListener('click', startAnimation);
+            stopBtn.addEventListener('click', stopAnimation);
+            document.getElementById('reset-lights').addEventListener('click', resetLights);
+            
+            // 速度切换
+            document.querySelectorAll('input[name="speed"]').forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    animationSpeed = e.target.value === 'slow' ? 2000 : e.target.value === 'fast' ? 500 : 1000;
+                    if (isRunning) {
+                        stopAnimation();
+                        startAnimation();
+                    }
+                });
+            });
+            
+            // 效果切换
+            document.querySelectorAll('input[name="effect"]').forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    effect = e.target.value;
+                    if (isRunning) updateLights();
+                });
+            });
+
+            // 初始化
+            resetLights();
+            stopAnimation();
+        });
+    </script>
+</body>
+</html>
+    
